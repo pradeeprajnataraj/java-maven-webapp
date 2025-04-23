@@ -1,0 +1,20 @@
+trigger:
+- main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: Maven@3
+  inputs:
+    mavenPomFile: 'pom.xml'
+    goals: 'package'
+    javaHomeOption: 'Path'
+    jdkVersionOption: '1.11'
+    mavenOptions: '-Xmx3072m'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(System.DefaultWorkingDirectory)/target/HelloWorldWebApp-1.0-SNAPSHOT.war'
+    ArtifactName: war-file
+    publishLocation: Container
